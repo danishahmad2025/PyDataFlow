@@ -58,3 +58,4 @@ def read_json_file(file_path: str) -> Generator[Dict[str, Any], None, None]:
         for record in data:
             logger.debug(f"Read JSON record: {record}")
             yield record
+
