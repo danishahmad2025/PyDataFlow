@@ -1,6 +1,6 @@
 import time
 from logging_config.logger import get_logger
-
+from config.settings import MAX_RETRIES
 logger = get_logger("retry.retry_handler")
 
 
