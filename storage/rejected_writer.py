@@ -1,42 +1,49 @@
 import json
-import os
-from datetime import datetime
-from logging_config.logger import get_logger
+# Used to serialize Python dicts into JSON
 
-# Create logger for rejected writer
+import os
+# Used for directory creation
+
+from datetime import datetime
+# Used for timestamping rejected records
+
+from logging_config.logger import get_logger
+# Project logger
+
+from config.settings import REJECTED_DATA_PATH
+# Central rejected path from config
+
 logger = get_logger("storage.rejected_writer")
 
 
 def write_rejected_record(record, reason, source):
     """
-    Writes rejected records to a JSON Lines file (JSONL).
-
-    This function is:
-    - append-only
-    - safe for reprocessing
-    - retry-friendly
+    Writes rejected records as JSON Lines (JSONL).
     """
 
-    # Ensure rejected directory exists (idempotent operation)
-    os.makedirs("data/rejected", exist_ok=True)
+    # Ensure directory exists (important for first run)
+    os.makedirs(os.path.dirname(REJECTED_DATA_PATH), exist_ok=True)
 
-    # Build rejected entry structure
     rejected_entry = {
         "timestamp": datetime.utcnow().isoformat(),
+        # When the rejection happened (UTC)
+
         "source": source,
+        # Where the record came from (csv/json/api)
+
         "reason": reason,
+        # Why it was rejected
+
         "record": record
+        # Actual rejected data
     }
 
     try:
-        # Open file in append mode
-        with open("data/rejected/rejected_records.jsonl", "a") as f:
-            # Write one JSON object per line
-            f.write(json.dumps(rejected_entry) + "\n")
+        with open(REJECTED_DATA_PATH, "a") as file:
+            file.write(json.dumps(rejected_entry) + "\n")
+            # Append one JSON object per line
 
-        # Warning level because this is abnormal but expected behavior
         logger.warning(f"Rejected record stored: {rejected_entry}")
 
-    except Exception as e:
-        # Log error but DO NOT crash pipeline
-        logger.error(f"Failed to write rejected record: {e}")
+    except Exception as exc:
+        logger.error(f"Failed to write rejected record: {exc}")

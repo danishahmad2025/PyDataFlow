@@ -13,6 +13,11 @@ from storage.rejected_writer import write_rejected_record
 # Import metrics class
 from metrics.metrics import PipelineMetrics
 
+from reprocessing.reprocess_rejected import reprocess_rejected
+
+reprocess_rejected()
+
+
 
 # Create logger for main module
 logger = get_logger("main")

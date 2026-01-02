@@ -1,37 +1,39 @@
 import logging
-from pathlib import Path
+# Python built-in logging module
 
-# Create logs directory if it does not exist
-LOG_DIR = Path("logs")
-LOG_DIR.mkdir(exist_ok=True)
+from config.settings import LOG_LEVEL
+# Import log level from config (DEV / PROD aware)
 
-LOG_FILE = LOG_DIR / "app.log"
-
-
-def get_logger(name: str) -> logging.Logger:
+def get_logger(name: str):
     """
-    Creates and returns a configured logger.
+    Returns a configured logger instance.
     """
 
     logger = logging.getLogger(name)
-    logger.setLevel(logging.DEBUG)
+    # Get (or create) a logger with the given name
 
     if logger.handlers:
-        return logger  # Prevent duplicate logs
+        return logger
+        # Prevent duplicate handlers if logger already exists
+
+    level = getattr(logging, LOG_LEVEL)
+    # Convert "DEBUG"/"INFO" string into logging.DEBUG / logging.INFO
+
+    logger.setLevel(level)
+    # Set logger level based on environment
+
+    handler = logging.StreamHandler()
+    # Log output to console (stdout)
 
     formatter = logging.Formatter(
         "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     )
+    # Define log format
 
-    file_handler = logging.FileHandler(LOG_FILE)
-    file_handler.setLevel(logging.DEBUG)
-    file_handler.setFormatter(formatter)
+    handler.setFormatter(formatter)
+    # Attach format to handler
 
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
-    console_handler.setFormatter(formatter)
-
-    logger.addHandler(file_handler)
-    logger.addHandler(console_handler)
+    logger.addHandler(handler)
+    # Attach handler to logger
 
     return logger
