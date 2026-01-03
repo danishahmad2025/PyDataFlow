@@ -6,6 +6,14 @@ from validation.validator import validate_record
 logger = get_logger("reprocessing.reprocess_rejected")
 
 
+from retry.retry_handler import retry_operation
+
+def read_rejected_file():
+    with open("data/rejected/rejected_records.jsonl") as f:
+        return f.readlines()
+
+lines = retry_operation(read_rejected_file)
+
 def reprocess_rejected(file_path="data/rejected/rejected_records.jsonl"):
     """
     Reads rejected records and tries to validate them again.
