@@ -7,7 +7,7 @@ PyDataFlow is a lightweight, end-to-end data engineering pipeline built using pu
 - Build scalable data ingestion pipelines
 - Apply data validation and transformation
 - Practice logging, error handling, and modular design
-- Create a resume-ready open-source project
+
 
 ## Tech Stack
 - Python
