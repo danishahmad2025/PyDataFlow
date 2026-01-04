@@ -1,126 +1,118 @@
-PyDataFlow 🚀
+# PyDataFlow 🚀
 
-A beginner-friendly, production-style Python data ingestion pipeline.
+A beginner-friendly, production-style **Python data ingestion pipeline**.
 
-📌 Project Overview
+---
 
-PyDataFlow is a mini data engineering project that demonstrates how real-world data pipelines are built using pure Python.
+## 📌 Project Overview
 
-The project focuses on:
+**PyDataFlow** is a mini data engineering project that demonstrates how
+real-world data pipelines are built using **pure Python**.
 
-Streaming data ingestion
+This project is designed for:
+- Learning core data engineering concepts
+- Practicing clean project structure
+- Understanding streaming-style pipelines
+- Revision and open-source contribution
 
-Data validation
+---
 
-Safe handling of bad data
+## 🎯 What This Project Does
 
-Logging and metrics
+- Reads data from **CSV** and **JSON** files
+- Processes records **one at a time** using generators (memory efficient)
+- Validates each record safely without stopping the pipeline
+- Separates **valid** and **rejected** records
+- Stores rejected records with detailed rejection reasons
+- Tracks basic processing metrics
+- Logs every important step for debugging and observability
 
-Clean, modular project structure
+---
 
-This repository is designed for learning, revision, and contribution.
+## 🧠 Why This Project Matters
 
-🎯 What This Project Does
+In real-world data systems:
 
-Reads data from CSV and JSON files
+- Data is often **messy or incomplete**
+- Pipelines **must not crash** because of bad records
+- Logging and metrics are essential for debugging
+- Code must be **modular, readable, and scalable**
 
-Processes records one by one using generators (memory-efficient)
+**PyDataFlow simulates these real-world challenges** in a simple and easy-to-understand way.
 
-Validates each record without breaking the pipeline
+---
 
-Separates valid and rejected records
+## 🏗️ Project Structure
 
-Stores rejected records with detailed reasons
-
-Tracks metrics like total, valid, and rejected records
-
-Logs everything for easy debugging and observability
-
-🧠 Why This Project Matters
-
-In real data systems:
-
-Data is often messy
-
-Pipelines must not crash due to bad records
-
-Logging and metrics are critical
-
-Code must be modular and scalable
-
-PyDataFlow simulates these real-world challenges in a simple and understandable way.
-
-🏗️ Project Structure
 PyDataFlow/
 │
-├── ingestion/           # Reading data sources (CSV, JSON)
-││   ├── __init__.py
-││   └── reader.py
+├── ingestion/ # Reading data sources
+│ ├── init.py
+│ └── reader.py # CSV & JSON readers (generators)
 │
-├── validation/          # Data validation logic
-││   ├── __init__.py
-││   └── validator.py
+├── validation/ # Data validation logic
+│ ├── init.py
+│ └── validator.py
 │
-├── storage/             # Storing rejected records
-││   ├── __init__.py
-││   └── rejected_writer.py
+├── storage/ # Handling rejected records
+│ ├── init.py
+│ └── rejected_writer.py
 │
-├── logging_config/      # Centralized logging setup
-││   ├── __init__.py
-││   └── logger.py
+├── logging_config/ # Centralized logging setup
+│ ├── init.py
+│ └── logger.py
 │
 ├── data/
-││   ├── raw/            # Input data files
-││   └── rejected/       # Rejected records (not committed)
+│ ├── raw/ # Input data files
+│ └── rejected/ # Rejected records (not committed)
 │
-├── utils/               # Utilities (retry, metrics, helpers)
+├── utils/ # Utilities (retry, metrics, helpers)
 │
-├── main.py              # Pipeline entry point
+├── main.py # Pipeline entry point
 ├── requirements.txt
 └── README.md
 
-🔧 Technologies Used
+---
 
-Python
+## 🔧 Technologies Used
 
-Python Logging module
+- **Python**
+- Python **logging** module
+- Generators & iterators
+- File-based processing (CSV, JSON, JSONL)
+- Modular pipeline architecture
+- Git & GitHub
 
-Generators & Iterators
+> ⚠️ **Note:**  
+> This project intentionally avoids Pandas to demonstrate
+> streaming data processing and memory-efficient design.
 
-File-based data processing (CSV, JSON, JSONL)
+---
 
-Modular pipeline architecture
+## ▶️ How to Run the Project
 
-Git & GitHub
-
-⚠️ Note: This project intentionally avoids Pandas to demonstrate streaming data processing.
-
-▶️ How to Run the Project
-
-Clone the repository
-
+### 1️⃣ Clone the repository
+```bash
 git clone https://github.com/<your-username>/PyDataFlow.git
 cd PyDataFlow
 
+---
 
-(Optional but recommended) Create a virtual environment
-
+2️⃣ (Optional) Create a virtual environment
 python -m venv venv
 source venv/bin/activate
 
-
-Install dependencies
-
+3️⃣ Install dependencies
 pip install -r requirements.txt
 
-
-Run the pipeline
-
+4️⃣ Run the pipeline
 python main.py
 
 📊 Output You Will See
 
-Logs printed in terminal and stored in log files
+Logs printed in the terminal
+
+Logs stored in log files
 
 Valid records processed successfully
 
@@ -129,14 +121,18 @@ Invalid records written to:
 data/rejected/rejected_records.jsonl
 
 
-Final summary with processing metrics
+Final execution summary with processing metrics
 
 🧪 Example Rejected Record (JSONL)
 {
   "timestamp": "2025-12-30T19:18:49",
   "source": "csv",
   "reason": "Invalid age value",
-  "record": {"id": "5", "name": "David", "age": "-5"}
+  "record": {
+    "id": "5",
+    "name": "David",
+    "age": "-5"
+  }
 }
 
 🌱 Future Improvements
@@ -149,15 +145,15 @@ Add unit tests
 
 Add orchestration (Airflow / Prefect)
 
-Add API ingestion
+Add API-based ingestion
 
 🤝 Contributions
 
 This project is open-source and contribution-friendly.
 
-Feel free to:
+You are welcome to:
 
-Fork the repo
+Fork the repository
 
 Open issues
 
@@ -168,4 +164,5 @@ Suggest improvements
 📌 Author
 
 Danish Ekbal Ahmad
-Learning Data Engineering by building real projects.
+Learning Data Engineering by building real-world projects.
+
